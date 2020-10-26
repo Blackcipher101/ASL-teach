@@ -2,14 +2,27 @@ from django.shortcuts import render
 import base64
 import numpy as np
 import cv2
-
+import requests
+p=False
 def home(request):
     return render(request, 'ASL_Learn/home.html', {})
 def imagedetection(request):
+    print("works")
     b64_arr=request.POST['myData']
-    print(b64_arr[22:])
-    im_bytes = base64.b64decode(b64_arr[22:])
-    im_arr = np.frombuffer(im_bytes, dtype=np.uint8)  # im_arr is one-dim Numpy array
-    img = cv2.imdecode(im_arr, flags=cv2.IMREAD_COLOR)
-    print(img)
+    text=request.POST['test']
+    data=b64_arr[22:]
+    PARAMS = {'data': data}
+    print(text)
+
+    response = requests.post(url='http://localhost:5000/predict?',data=PARAMS)
+    predict=response.text[1]
+    print(predict)
+    global p
+    p=False
+    if text==predict:
+        p=True
+def result(request):
+    global p
+    print(p)
+    return render(request , 'ASL_Learn/result.html' , {'p':p})
 # Create your views here.
