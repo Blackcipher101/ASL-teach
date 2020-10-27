@@ -35,3 +35,4 @@ Choose a letter -> Take a photo :camera: -> check :heavy_check_mark:-> master:cr
 <img src="images/4.png">
 <img src="images/5.png">
 <img src="images/6.png">
+<img src="images/7.png">
